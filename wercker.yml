@@ -1,0 +1,11 @@
+#Use OpenJDK base docker image from dockerhub and open the application port on the docker container
+box:
+  id: openjdk
+  ports:
+    - $PORT
+build:
+  steps:
+    - Execute shell:
+        git config –global url.https://github.com/.insteadOf git://github.com/
+        npm install
+        zip -r greeting.zip .
