@@ -5,7 +5,7 @@ box:
     - $PORT
 build:
   steps:
-    - Execute shell:
+    - shell:
         git config --global url.https://github.com/.insteadOf git://github.com/
         npm install
         zip -r greeting.zip .
