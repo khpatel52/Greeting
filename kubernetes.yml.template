@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: greeting-feed-v1
+  name: greeting-v1
   labels:
     commit: ${WERCKER_GIT_COMMIT}
 spec:
@@ -16,11 +16,11 @@ spec:
         commit: ${WERCKER_GIT_COMMIT}
     spec:
       containers:
-      - name: greeting-feed
+      - name: greeting
         image: ${DOCKER_REPO}:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
         imagePullPolicy: Always
         ports:
-        - name: greeting-feed
+        - name: greeting
           containerPort: ${PORT}
           protocol: TCP
       imagePullSecrets:
@@ -29,15 +29,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: greeting-feed
+  name: greeting
   labels:
-    app: greeting-feed
+    app: greeting
     commit: ${WERCKER_GIT_COMMIT}
 spec:
   ports:
   - port: 30000
     targetPort: ${PORT}
   selector:
-    app: greeting-feed
+    app: greeting
   type: ClusterIP
 ---
