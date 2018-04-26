@@ -1,4 +1,7 @@
-box: nodesource/trusty
+box:
+ id: node:latest
+ ports:
+   - "8080"
 dev:
   steps:
     - npm-install
