@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: Greeting-v1
+  labels:
+    commit: ${WERCKER_GIT_COMMIT}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: Greeting
+  template:
+    metadata:
+      labels:
+        app: Greeting
+        commit: ${WERCKER_GIT_COMMIT}
+    spec:
+      containers:
+      - name: Greeting
+        image: ${DOCKER_REPO}:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+        imagePullPolicy: Always
+        ports:
+        - name: Greeting
+          containerPort: ${PORT}
+          protocol: TCP
+      imagePullSecrets:
+        - name: wercker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: Greeting
+  labels:
+    app: Greeting
+    commit: ${WERCKER_GIT_COMMIT}
+spec:
+  ports:
+  - port: 30000
+    targetPort: ${PORT}
+  selector:
+    app: Greeting
+  type: ClusterIP
+---
