@@ -6,6 +6,6 @@ box:
 build:
   steps:
     - Execute shell:
-        git config –global url.https://github.com/.insteadOf git://github.com/
+        git config --global url.https://github.com/.insteadOf git://github.com/
         npm install
         zip -r greeting.zip .
