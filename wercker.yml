@@ -1,11 +1,28 @@
 #Use OpenJDK base docker image from dockerhub and open the application port on the docker container
 box:
-  id: openjdk
+  id: node:latest
   ports:
-    - $PORT
-build:
+    - "8080"
+dev:
   steps:
-    - shell:
-        git config --global url.https://github.com/.insteadOf git://github.com/
-        npm install
-        zip -r greeting.zip .
+    - npm-install
+    - internal/watch:
+        code: node app.js
+        reload: true
+build:
+  # The steps that will be executed on build
+  steps:
+    - script:
+        code: export NODE_ENV='testing'
+    # A step that executes `npm install` command
+    - npm-install
+    # A step that executes `npm test` command
+    - npm-test
+
+    # A custom script step, name value is used in the UI
+    # and the code value contains the command that get executed
+    - script:
+        name: echo nodejs information
+        code: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
