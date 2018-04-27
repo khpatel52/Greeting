@@ -8,11 +8,11 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: greeting-feed
+      app: greeting
   template:
     metadata:
       labels:
-        app: greeting-feed
+        app: greeting
         commit: ${WERCKER_GIT_COMMIT}
     spec:
       containers:
