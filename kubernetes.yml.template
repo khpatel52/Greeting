@@ -15,6 +15,18 @@ spec:
         app: greeting
         commit: ${WERCKER_GIT_COMMIT}
     spec:
+      containers:
+      - name: greeting
+        image: ${DOCKER_REPO}:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+        imagePullPolicy: Always
+        ports:
+        - name: greeting
+          containerPort: ${PORT}
+          protocol: TCP
+        volumeMounts:
+            - name: podinfo
+              mountPath: /tmp
+              readOnly: false
 
 ---
 apiVersion: v1
